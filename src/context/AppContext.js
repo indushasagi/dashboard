@@ -5,7 +5,8 @@ import convert from 'xml-js';
 export const intialAppContext = {
     isAuthenticated: false,
     books: [],
-    makeupList: []
+    makeupList: [],
+    addProductToCart: [],
 }
 
 export const AppContext = React.createContext(intialAppContext);
@@ -14,7 +15,8 @@ export default class AppContextProvider extends React.Component {
     state = {
         isAuthenticated: false,
         books: [],
-        makeupList: []
+        makeupList: [],
+        addProductToCart: [],
     }
     authenticate = () => {
         this.setState({ isAuthenticated: true })
@@ -55,6 +57,13 @@ export default class AppContextProvider extends React.Component {
             });
     }
 
+    addToCart = (event, product) => {
+        event.preventDefault();
+        const arr = this.state.addProductToCart;
+        arr.push(product);
+        this.setState({ addProductToCart: arr });
+    }
+
     render() {
         return (
             <AppContext.Provider value={{
@@ -63,7 +72,8 @@ export default class AppContextProvider extends React.Component {
                 authenticate: this.authenticate,
                 getMakeupList: this.getMakeupList,
                 signout: this.signout,
-                getBooks: this.getBooks
+                getBooks: this.getBooks,
+                addToCart: this.addToCart
             }}>
                 {this.props.children}
             </AppContext.Provider >

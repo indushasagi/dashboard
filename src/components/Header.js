@@ -1,15 +1,15 @@
 import React, { useContext } from 'react';
 import { AppContext } from '../context/AppContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faShoppingCart, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
 const Header = () => {
-    const { isAuthenticated, signout } = useContext(AppContext);
-
+    const { isAuthenticated, signout, addProductToCart } = useContext(AppContext);
     return (
         <>
             <div className="App-header">
-                <span className="signOut" onClick={signout} title="Sign Out">{isAuthenticated === true && <FontAwesomeIcon icon={faSignOutAlt} className="fa-lg" />}</span>
+                {isAuthenticated === true && <span className="headerIcon" style={{ color: 'brown' }} onClick={signout} title="Sign Out"> <FontAwesomeIcon icon={faSignOutAlt} className="fa-lg " /></span>}
+                {isAuthenticated === true && <span className="headerIcon fa-stack has-badge" data-count={addProductToCart.length} style={{ color: 'white' }} title="Cart" > <FontAwesomeIcon icon={faShoppingCart} className="fa-lg" /> </span>}
             </div>
         </>
     )

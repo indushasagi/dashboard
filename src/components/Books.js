@@ -31,7 +31,9 @@ const Books = () => {
             <form onSubmit={(event) => getBooks(event, searchInput)}>
                 <input className="searchInput" type="text" onChange={handleChange} placeholder=" Search for a book by author or title" />
             </form>
-            {displayBooks}
+            <div className="bookRes">
+                {displayBooks}
+            </div>
         </>
     )
 }

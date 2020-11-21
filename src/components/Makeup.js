@@ -4,7 +4,7 @@ import { AppContext } from '../context/AppContext';
 const Makeup = () => {
     const [brand, setBrand] = useState('');
     const [productType, setProductType] = useState('');
-    const { getMakeupList, makeupList } = useContext(AppContext);
+    const { getMakeupList, makeupList, addToCart } = useContext(AppContext);
 
     const handleChange = useCallback((event) => {
         if (event.target.name === 'brand') {
@@ -25,22 +25,19 @@ const Makeup = () => {
                     </div>
                     <div className="description">
                         <p><b>{data.name}</b></p>
-                        <p><b>Rating:</b> {data.rating >= 1 ? data.rating : "1"}/5</p>
+                        <div><b>Rating:</b> {data.rating >= 1 ? data.rating : "1"}/5
+                            <div className="addCart">
+                                <p><input type="button" className="btn makeup-cart" value="Add to Cart" onClick={(event) => addToCart(event, data)} /></p>
+                            </div>
+                        </div>
                         <p style={{ 'color': '#ef4d97' }}><b>${data.price}</b></p>
                         <p><b>Description: </b> <br /> {data.description}</p>
-                        <p><b>Features: </b><br />{data.features}</p>
+                        {data.features ? <p><b>Features: </b><br />{data.features}</p> : ""}
                     </div>
-                    <div className="addCart">
-                        <p>Quantity: <input type="text" className="quantity" /></p>
-                        <p><input type="button" className="btn makeup-cart" value="Add to Cart" /></p>
-                        <p><input type="button" className="btn makeup-cart" value="Buy Now " /></p>
-                    </div>
-
                 </div >
             )
         });
     return (
-
         <>
             <div className="makeup">
                 <form>
@@ -50,8 +47,6 @@ const Makeup = () => {
                 </form>
                 {displayMakupList}
             </div>
-
-
         </>
     )
 }
