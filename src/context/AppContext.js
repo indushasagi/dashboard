@@ -64,6 +64,13 @@ export default class AppContextProvider extends React.Component {
         this.setState({ addProductToCart: arr });
     }
 
+    removeFromCart = (productId) => {
+        const arr = this.state.addProductToCart;
+        const removeId = arr.filter((data) => {
+            return data.id !== productId;
+        });
+        this.setState({ addProductToCart: removeId });
+    }
     render() {
         return (
             <AppContext.Provider value={{
@@ -73,7 +80,8 @@ export default class AppContextProvider extends React.Component {
                 getMakeupList: this.getMakeupList,
                 signout: this.signout,
                 getBooks: this.getBooks,
-                addToCart: this.addToCart
+                addToCart: this.addToCart,
+                removeFromCart: this.removeFromCart,
             }}>
                 {this.props.children}
             </AppContext.Provider >

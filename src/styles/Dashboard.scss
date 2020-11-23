@@ -35,14 +35,13 @@
         } 
     } 
     .flex-child:first-child {
-        position: absolute;
         max-width: 12%;
         padding-top:10px;
-        height:auto;
+        height: 400px;
         background-color: rgb(253, 221, 253);
     } 
     .searchInput{
-        margin-left:18%;
+        margin-left:10%;
         width: 60%;
         height: 50px;
         border:solid 1px #ccc;
@@ -50,7 +49,7 @@
         padding-left:10px;
     }
     .bookRes{
-        margin-left:18%;
+        margin-left:10%;
         .resp{
             margin-top:1%;
             display: inline-block;
@@ -68,7 +67,7 @@
         }
     }
     .makeup{
-        margin-left:15%;
+        margin-left:6%;
         .searchInput{
             width: 25%;
             height: 50px;
