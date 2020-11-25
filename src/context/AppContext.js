@@ -7,6 +7,7 @@ export const intialAppContext = {
     books: [],
     makeupList: [],
     addProductToCart: [],
+    quantity: 1
 }
 
 export const AppContext = React.createContext(intialAppContext);
@@ -17,6 +18,7 @@ export default class AppContextProvider extends React.Component {
         books: [],
         makeupList: [],
         addProductToCart: [],
+        quantity: 1
     }
     authenticate = () => {
         this.setState({ isAuthenticated: true })
@@ -49,6 +51,7 @@ export default class AppContextProvider extends React.Component {
                     const splitFeature = data.description.split('Features:');
                     data.description = splitFeature[0];
                     data['features'] = splitFeature[1];
+                    data['quantity'] = 1;
                     return data;
                 });
                 this.setState({ makeupList: modifyRes })
@@ -60,16 +63,40 @@ export default class AppContextProvider extends React.Component {
     addToCart = (event, product) => {
         event.preventDefault();
         const arr = this.state.addProductToCart;
-        arr.push(product);
+        let checkFlag = false;
+        arr.forEach((data) => {
+            if (data.id === product.id) {
+                product['quantity'] = ++product['quantity'];
+                return checkFlag = true;
+            }
+        });
+        if (arr.length === 0 || !checkFlag) {
+            arr.push(product);
+        }
         this.setState({ addProductToCart: arr });
     }
 
     removeFromCart = (productId) => {
         const arr = this.state.addProductToCart;
         const removeId = arr.filter((data) => {
+            if (data.id === productId) {
+                data['quantity'] = 1;
+            }
             return data.id !== productId;
         });
         this.setState({ addProductToCart: removeId });
+    }
+
+    onQuantityChange = (event, productId) => {
+        const arr = this.state.addProductToCart;
+        const changedQuanitity = arr.map((data) => {
+            if (data.id === productId) {
+                data.quantity = event.target.value
+                return data;
+            }
+            return data;
+        });
+        this.setState({ addProductToCart: changedQuanitity });
     }
     render() {
         return (
@@ -82,6 +109,7 @@ export default class AppContextProvider extends React.Component {
                 getBooks: this.getBooks,
                 addToCart: this.addToCart,
                 removeFromCart: this.removeFromCart,
+                onQuantityChange: this.onQuantityChange
             }}>
                 {this.props.children}
             </AppContext.Provider >

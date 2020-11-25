@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useCallback, useReducer } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
+import React, { useState, useEffect, useReducer } from 'react';
+import { Table, Modal } from 'react-bootstrap';
+import { Trash } from 'react-bootstrap-icons';
 
 function store(state, action) {
     switch (action.type) {
@@ -16,22 +16,23 @@ function store(state, action) {
 
 }
 
-const Cartlist = ({ handleClose, show, addProductToCart, removeFromCart }) => {
-    const [itemQuantity, dispatch] = useReducer(store, {});
+const Cartlist = ({ handleClose, show, addProductToCart, removeFromCart, onQuantityChange }) => {
     const [subTotal, setSubTotal] = useState(0);
 
-    const onTextChange = useCallback((event) => {
-        const eventName = event.target.name;
-        dispatch({ type: "APPEND", payload: { [eventName]: event.target.value } });
-    }, [dispatch]);
+    // const onTextChange = useCallback((event) => {
+    //     const eventName = event.target.name;
+    //     dispatch({ type: "APPEND", payload: { [eventName]: event.target.value } });
+    // }, [dispatch]);
 
-    const showHideClassName = show ? "modal display-block" : "modal display-none";
+    // const onTextChange = useCallback((event) => {
+    //     const eventName = event.target.name;
+
+    // }, [dispatch]);
 
     useEffect(() => {
         let totalPrice = 0;
-        addProductToCart.map((data, i) => {
-            const name = `${data.brand}_${data.name}`;
-            totalPrice = parseInt(totalPrice) + parseInt(`${itemQuantity[name] ? (data.price) * (itemQuantity[name]) : data.price}`);
+        addProductToCart.map((data) => {
+            totalPrice = parseInt(totalPrice) + parseInt((data.price) * (data.quantity));
             return (
                 setSubTotal(totalPrice)
             )
@@ -41,25 +42,26 @@ const Cartlist = ({ handleClose, show, addProductToCart, removeFromCart }) => {
     const displayCartItem =
         addProductToCart.map((data, i) => {
             const name = `${data.brand}_${data.name}`;
-            const totalPrice = `${itemQuantity[name] ? (data.price) * (itemQuantity[name]) : data.price}`;
             return (
                 <tr key={i}>
                     <td>{data.name}</td>
                     <td>${data.price}</td>
-                    <td><input type="number" min="1" value={itemQuantity[name] ? itemQuantity[name] : 1} name={name} onChange={(event) => onTextChange(event)} style={{ width: '65%', marginLeft: '16%' }} /></td>
-                    <td>{totalPrice}</td>
-                    <td><span name={data.id} onClick={() => removeFromCart(data.id)}><FontAwesomeIcon icon={faTrash} style={{ color: 'red', cursor: 'pointer' }} className="fa-lg " /></span></td>
+                    <td><input type="number" min="1" value={data.quantity} name={name} onChange={(event) => onQuantityChange(event, data.id)} style={{ width: '65%', marginLeft: '16%' }} /></td>
+                    <td>{(data.price) * (data.quantity)}</td>
+                    <td><span name={data.id} onClick={() => removeFromCart(data.id)}><Trash style={{ color: 'red', cursor: 'pointer' }} /></span></td>
                 </tr>
             )
         });
 
     return (
-        <div className={showHideClassName}>
-            <section className="modal-main">
-                <button onClick={handleClose}><FontAwesomeIcon icon={faTimes} style={{ color: 'black' }} className="fa-lg " /></button>
+        <Modal show={show} onHide={handleClose} size="lg">
+            <Modal.Header closeButton>
+
+            </Modal.Header>
+            <Modal.Body>
                 <div>
-                    <table>
-                        <thead className="thead">
+                    <Table responsive="sm" striped bordered hover>
+                        <thead>
                             <tr>
                                 <th>Name</th>
                                 <th>Price</th>
@@ -68,14 +70,14 @@ const Cartlist = ({ handleClose, show, addProductToCart, removeFromCart }) => {
                                 <th>RemoveItem</th>
                             </tr>
                         </thead>
-                        <tbody className="tbody">
+                        <tbody>
                             {displayCartItem}
                         </tbody>
-                    </table>
+                    </Table>
                     <p style={{ textAlign: 'center' }}><b>SubTotal : ${subTotal}</b></p>
                 </div>
-            </section>
-        </div>
+            </Modal.Body>
+        </Modal>
     );
 };
 

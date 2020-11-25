@@ -1,5 +1,6 @@
 import React, { useState, useReducer, useCallback } from 'react';
 import { Link } from "react-router-dom";
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 
 function store(state, action) {
     switch (action.type) {
@@ -36,32 +37,34 @@ const Signup = () => {
         dispatch({ type: "APPEND", payload: { [eventName]: event.target.value } });
     }, [dispatch]);
     return (
-        <div className="App">
-            <form className="controls" onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label className="form-label">First Name </label>
-                    <input type="text" value={formData['firstName'] ? formData['firstName'] : ""} name="firstName" className="input-group" onChange={onTextChange} />
-                </div>
-                <div className="form-group">
-                    <label className="form-label">Last Name </label>
-                    <input type="text" value={formData['lastName'] ? formData['lastName'] : ""} name="lastName" className="input-group" onChange={onTextChange} />
-                </div>
-                <div className="form-group">
-                    <label className="form-label">Email address </label>
-                    <input type="email" value={formData['email'] ? formData['email'] : ""} name="email" className="input-group" onChange={onTextChange} />
-                </div>
-                <div className="form-group">
-                    <label className="form-label">Password </label>
-                    <input type="password" value={formData['password'] ? formData['password'] : ""} name="password" className="input-group" onChange={onTextChange} />
-                </div>
-                <div>
-                    <span>{passwordLenCheck}</span>
-                </div>
-                <button className="btn" type="submit">Signup</button>
-                {successmsg && <p>Account Created Successfully !!!!!</p>}
-                {successmsg && <p><Link to="/">Click to Login</Link></p>}
-            </form>
-        </div>
+        <Container>
+            <Row>
+                <Col md={{ span: 4, offset: 3 }}>
+                    <Form onSubmit={handleSubmit}>
+                        <Form.Group>
+                            <Form.Label>FirstName</Form.Label>
+                            <Form.Control type="text" value={formData['firstName'] ? formData['firstName'] : ""} name="firstName" placeholder="Enter FirstName" onChange={onTextChange} />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>LastName</Form.Label>
+                            <Form.Control type="text" value={formData['lastName'] ? formData['lastName'] : ""} name="lastName" placeholder="Enter LastName" onChange={onTextChange} />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Email address</Form.Label>
+                            <Form.Control type="email" value={formData['email'] ? formData['email'] : ""} name="email" placeholder="Enter FirstName" onChange={onTextChange} />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Password</Form.Label>
+                            <Form.Control type="password" value={formData['password'] ? formData['password'] : ""} name="password" placeholder="Enter Password" onChange={onTextChange} />
+                        </Form.Group>
+                        <p>{passwordLenCheck}</p>
+                        <Button variant="primary" type="submit"> Signup </Button>
+                        {successmsg && <p>Account Created Successfully !!!!!</p>}
+                        {successmsg && <p><Link to="/">Click to Login</Link></p>}
+                    </Form>
+                </Col>
+            </Row>
+        </Container>
     )
 }
 

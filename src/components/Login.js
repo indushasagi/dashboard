@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useContext } from 'react';
 import { Link, useHistory } from "react-router-dom";
 import { AppContext } from '../context/AppContext';
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 
 function Login() {
     const { authenticate } = useContext(AppContext);
@@ -30,21 +31,27 @@ function Login() {
 
     return (
         <>
-            <div className="App">
-                <form className="controls" onSubmit={handleSubmit}>
-                    <div className="form-group">
-                        <label className="form-label">Email address </label>
-                        <input type="text" value={email} name="email" className="input-group" onChange={validateChange} />
-                    </div>
-                    <div className="form-group">
-                        <label className="form-label">Password </label>
-                        <input type="password" value={password} name="password" className="input-group" onChange={validateChange} />
-                    </div>
-                    <button className="btn" type="submit">Submit</button>
-                    <p> {loginError}</p>
-                    <Link to="/signup">Sign UP</Link>
-                </form>
-            </div>
+            <Container>
+                <Row>
+                    <Col md={{ span: 4, offset: 3 }}>
+                        <Form onSubmit={handleSubmit}>
+                            <Form.Group controlId="formBasicEmail">
+                                <Form.Label>Email address</Form.Label>
+                                <Form.Control type="text" value={email} name="email" placeholder="Enter email" onChange={validateChange} />
+                            </Form.Group>
+                            <Form.Group controlId="formBasicPassword">
+                                <Form.Label>Password</Form.Label>
+                                <Form.Control type="password" value={password} name="password" placeholder="Password" onChange={validateChange} />
+                            </Form.Group>
+                            <Button variant="primary" type="submit">
+                                Submit
+                            </Button>
+                            <p> {loginError}</p>
+                            <Link to="/signup">Sign UP</Link>
+                        </Form>
+                    </Col>
+                </Row>
+            </Container>
         </>
     )
 }
