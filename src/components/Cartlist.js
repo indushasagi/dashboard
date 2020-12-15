@@ -1,20 +1,6 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table, Modal } from 'react-bootstrap';
 import { Trash } from 'react-bootstrap-icons';
-
-function store(state, action) {
-    switch (action.type) {
-        case "APPEND":
-            let data = action.payload;
-            for (var key in data) {
-                state[key] = data[key]
-            }
-            return { ...state };
-        default:
-            return { ...state }
-    }
-
-}
 
 const Cartlist = ({ handleClose, show, addProductToCart, removeFromCart, onQuantityChange }) => {
     const [subTotal, setSubTotal] = useState(0);

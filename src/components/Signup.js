@@ -23,6 +23,7 @@ const Signup = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        localStorage.setItem('createAccount',JSON.stringify(formData));
         setSuccessmsg(true);
     }
 

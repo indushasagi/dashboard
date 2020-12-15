@@ -21,7 +21,8 @@ function Login() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        if (email !== "admin" || password !== "admin") {
+        const details = JSON.parse(localStorage.getItem('createAccount'));
+        if (email !== details.email || password !== details.password) {
             setLoginError('Invalid Credentials');
         } else {
             authenticate();

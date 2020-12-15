@@ -1,4 +1,4 @@
-import { Bag, Book, Cart } from 'react-bootstrap-icons';
+import { Bag, Book } from 'react-bootstrap-icons';
 
 const dashBoardlist = [
     {
@@ -17,14 +17,14 @@ const dashBoardlist = [
         "indicator": "Books",
         "bgColor": "#f7f1f2b3"
     },
-    {
-        "index": "3",
-        "icon": Cart,
-        "text": "Shopping",
-        "color": "green",
-        "indicator": "Shopping",
-        "bgColor": "#f7f1f2b3"
-    },
+    // {
+    //     "index": "3",
+    //     "icon": Cart,
+    //     "text": "Shopping",
+    //     "color": "green",
+    //     "indicator": "Shopping",
+    //     "bgColor": "#f7f1f2b3"
+    // },
 ];
 
 export default dashBoardlist;
